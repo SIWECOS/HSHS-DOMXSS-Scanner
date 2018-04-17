@@ -36,8 +36,6 @@ class ContentTypeRating extends Rating
 
             $header = $header[0];
 
-            $this->testDetails->push(['placeholder' => 'HEADER', ]);
-
             if (stripos($header, 'charset=') !== false) {
                 $this->score = 50;
                 $detail = "CT_HEADER_WITH_CHARSET";
