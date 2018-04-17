@@ -57,7 +57,7 @@ class ApiController extends Controller
                 $client->post($url, [
                     'http_errors' => false,
                     'timeout' => 60,
-                    'json' => $report
+                    'json' => json_encode($report)
                 ]);
             }
             catch (\Exception $e) {
