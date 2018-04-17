@@ -78,7 +78,7 @@ class ContentTypeRating extends Rating {
 
 			if ( stripos( $finding[0]->charset, 'utf-8' ) !== false ) {
 				$this->score = 60;
-				$detailMeta  = "CT_META_TAG_SET_CORRECT";
+				$detailMeta  = "CT_META_TAG_SET_CORRECTRAW";
 			}
 
 			$this->testDetails->push( [
