@@ -23,20 +23,20 @@ class XXSSProtectionRating extends Rating
         if ($header === null) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_NOT_SET";
-            $this->testDetails->push(['placeholder' => 'HEADER_NOT_SET']);
+            $this->testDetails->push(['placeholder' => 'HEADER_NOT_SET', 'values'=>[]]);
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
-            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES']);
+            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values'=>[]]);
         } else {
             $header = $header[0];
 
             $this->score = 50;
-            $this->testDetails->push(['placeholder' => 'XXSS_CORRECT']);
+            $this->testDetails->push(['placeholder' => 'XXSS_CORRECT', 'values'=>[]]);
 
             if (strpos($header, 'mode=block') !== false) {
                 $this->score = 100;
-                $this->testDetails->push(['placeholder' => 'XXSS_BLOCK']);
+                $this->testDetails->push(['placeholder' => 'XXSS_BLOCK', 'values'=>[]]);
             }
         }
     }
