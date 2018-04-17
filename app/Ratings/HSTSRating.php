@@ -23,6 +23,7 @@ class HSTSRating extends Rating
         if ($header === null) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_NOT_SET";
+            $this->testDetails->push(['placeholder' => 'HEADER_NOT_SET', 'values' => [] ]);
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
@@ -43,10 +44,10 @@ class HSTSRating extends Rating
 
             if ($maxAge < 15768000) {
                 $this->score = 60;
-                $this->testDetails->push(['placeholder' => 'HSTS_LESS_6']);
+                $this->testDetails->push(['placeholder' => 'HSTS_LESS_6', 'values' => []]);
             } elseif ($maxAge >= 15768000) {
                 $this->score = 100;
-                $this->testDetails->push(['placeholder' => 'HSTS_MORE_6']);
+                $this->testDetails->push(['placeholder' => 'HSTS_MORE_6', 'values' => []]);
             } else {
                 $this->score = 0;
                 $this->hasError = true;
@@ -54,11 +55,11 @@ class HSTSRating extends Rating
             }   
 
             if (strpos($header, 'includeSubDomains') !== false) {
-                $this->testDetails->push(['placeholder' => 'INCLUDE_SUBDOMAINS']);
+                $this->testDetails->push(['placeholder' => 'INCLUDE_SUBDOMAINS', 'values' => []]);
             }
 
             if (strpos($header, 'preload') !== false) {
-                $this->testDetails->push(['placeholder' => 'HSTS_PRELOAD']);
+                $this->testDetails->push(['placeholder' => 'HSTS_PRELOAD', 'values' => []]);
             }
         }
     }
