@@ -28,7 +28,7 @@ class ContentTypeRating extends Rating
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
-            $this->testDetails->push(['placeholder' => 'HEADER', 'values' => [ ['scanned' => $header] ]]);
+            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ['HEADER' => $header] ]]);
         } else {
             $detail = "CT_HEADER_WITHOUT_CHARSET";
 
@@ -36,7 +36,7 @@ class ContentTypeRating extends Rating
 
             $header = $header[0];
 
-            $this->testDetails->push(['placeholder' => 'HEADER', 'values' => [ ['scanned' => $header] ]]);
+            $this->testDetails->push(['placeholder' => 'HEADER', ]);
 
             if (stripos($header, 'charset=') !== false) {
                 $this->score = 50;
@@ -63,7 +63,7 @@ class ContentTypeRating extends Rating
                 $detail = "CT_WRONG_CHARSET";
             }
 
-            $this->testDetails->push(['placeholder' => $detail]);
+            $this->testDetails->push(['placeholder' => $detail,'values' => [ ['HEADER' => $header] ]]);
         }
     }
 
@@ -82,7 +82,7 @@ class ContentTypeRating extends Rating
                 $detailMeta = "CT_META_TAG_SET_CORRECT";
             }
             
-            $this->testDetails->push(['placeholder' => 'META', 'values' => [ ['scanned' => json_encode($finding[0]->__toString())] ]]);
+            $this->testDetails->push(['placeholder' => $detailMeta, 'values' => [ ['META' => json_encode($finding[0]->__toString())] ]]);
         }
         // case: <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         elseif ($finding = $dom->find('meta[http-equiv=Content-Type]')) {
@@ -94,7 +94,7 @@ class ContentTypeRating extends Rating
                 $this->score = 30;
             }
 
-            $this->testDetails->push(['placeholder' => 'META', 'values' => [ $finding[0]->__toString() ]]);
+            $this->testDetails->push(['placeholder' => 'CT_META_TAG_SET', 'values' => [ 'META' => $finding[0]->__toString() ]]);
         }
 
         if ($detailMeta)
