@@ -23,22 +23,21 @@ class XFrameOptionsRating extends Rating
         if ($header === null) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_NOT_SET";
+            $this->testDetails->push(['HEADER_NOT_SET' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ['HEADER' => json_encode($header)] ]]);
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
-            $this->testDetails->push(['placeholder' => 'HEADER', 'values' => [ ['scanned' => json_encode($header)] ]]);
+            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ['HEADER' => json_encode($header)] ]]);
         } else {
             $header = $header[0];
 
-            $this->testDetails->push(['placeholder' => 'HEADER', 'values' => [ ['scanned' => json_encode($header)] ]]);
-
             if (strpos($header, '*') !== false) {
                 $this->score = 0;
-                $this->testDetails->push(['placeholder' => 'XFO_WILDCARDS']);
+                $this->testDetails->push(['placeholder' => 'XFO_WILDCARDS', 'values' => [ ['HEADER' => json_encode($header)] ]]);
             }
             else {
                 $this->score = 100;
-                $this->testDetails->push(['placeholder' => 'XFO_CORRECT']);
+                $this->testDetails->push(['placeholder' => 'XFO_CORRECT', 'values' => [ ['HEADER' => json_encode($header)] ]]);
             }
         }
     }
