@@ -16,6 +16,9 @@ class ContentTypeRating extends Rating {
 	}
 
 	protected function rate() {
+
+		$this->testDetails->push( [ 'placeholder' => "LOREMIPSUM"] );
+
 		$header = $this->getHeader( 'content-type' );
 
 		if ( $header === null ) {
