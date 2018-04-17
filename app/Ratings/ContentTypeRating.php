@@ -29,7 +29,7 @@ class ContentTypeRating extends Rating {
 			$this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
 			$this->testDetails->push( [
 				'placeholder' => 'HEADER_SET_MULTIPLE_TIMES',
-				'values'      => [ [ 'HEADER' => $header ] ]
+				'values'      => [ 'HEADER' => $header ]
 			] );
 		} else {
 			$detail = "CT_HEADER_WITHOUT_CHARSET";
@@ -63,7 +63,7 @@ class ContentTypeRating extends Rating {
 				$detail      = "CT_WRONG_CHARSET";
 			}
 
-			$this->testDetails->push( [ 'placeholder' => $detail, 'values' => [  ['HEADER' => $header ]] ] );
+			$this->testDetails->push( [ 'placeholder' => $detail, 'values' => [  'HEADER' => $header ] ] );
 		}
 	}
 
@@ -83,7 +83,7 @@ class ContentTypeRating extends Rating {
 
 			$this->testDetails->push( [
 				'placeholder' => $detailMeta,
-				'values'      => [ [ 'META' => $finding[0]->__toString() ] ]
+				'values'      => [  'META' => $finding[0]->__toString() ]
 			] );
 		} // case: <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		elseif ( $finding = $dom->find( 'meta[http-equiv=Content-Type]' ) ) {
@@ -96,8 +96,8 @@ class ContentTypeRating extends Rating {
 			}
 
 			$this->testDetails->push( [
-				'placeholder' => 'CT_META_TAG_SET',
-				'values'      => [[ 'META' => $finding[0]->__toString() ]]
+				'placeholder' => $detailMeta,
+				'values'      => [ 'META' => $finding[0]->__toString() ]
 			] );
 		}
 	}

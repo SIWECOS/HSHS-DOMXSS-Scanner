@@ -27,12 +27,12 @@ class CSPRating extends Rating
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
-            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ 'HEADER' => json_encode($header)] ]);
         } else {
             $header = $header[0];
             if (strpos($header, 'unsafe-inline') !== false || strpos($header, 'unsafe-eval') !== false) {
                 $this->score = 50;
-                $this->testDetails->push(['placeholder' => 'CSP_UNSAFE_INCLUDED', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+                $this->testDetails->push(['placeholder' => 'CSP_UNSAFE_INCLUDED', 'values' => [ 'HEADER' => json_encode($header)] ]);
                 $this->scoreType = "info";
             } elseif (strpos($header, 'unsafe-inline') === false && strpos($header, 'unsafe-eval') === false && strpos($header, "default-src 'none'") === false) {
                 $this->score = 75;
@@ -40,13 +40,13 @@ class CSPRating extends Rating
                 $this->testDetails->push(['placeholder' => 'CSP_NO_UNSAFE_INCLUDED', 'values' => [ ['HEADER' => json_encode($header)] ]]);
             } elseif (strpos($header, 'unsafe-inline') === false && strpos($header, 'unsafe-eval') === false && strpos($header, "default-src 'none'") !== false) {
                 $this->score = 100;
-                $this->testDetails->push(['placeholder' => 'CSP_CORRECT', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+                $this->testDetails->push(['placeholder' => 'CSP_CORRECT', 'values' => [ 'HEADER' => json_encode($header)] ]);
             }
         }
 
         // Check if legacy header is available
         if (count($this->getHeader("x-content-security-policy")) > 0) {
-            $this->testDetails->push(['placeholder' => 'CSP_LEGACY_HEADER_SET', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+            $this->testDetails->push(['placeholder' => 'CSP_LEGACY_HEADER_SET', 'values' => [ 'HEADER' => json_encode($header)] ]);
         }
     }
 }
