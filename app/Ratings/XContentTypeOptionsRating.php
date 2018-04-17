@@ -26,16 +26,16 @@ class XContentTypeOptionsRating extends Rating
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
-            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+            $this->testDetails->push(['placeholder' => 'HEADER_SET_MULTIPLE_TIMES', 'values' => [ ]]);
         } else {
             $header = $header[0];
 
             if (strpos($header, 'nosniff') !== false) {
                 $this->score = 100;
-                $this->testDetails->push(['placeholder' => 'XCTO_CORRECT', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+                $this->testDetails->push(['placeholder' => 'XCTO_CORRECT', 'values' => []]);
             }
             else {
-                $this->testDetails->push(['placeholder' => 'XCTO_NOT_CORRECT', 'values' => [ ['HEADER' => json_encode($header)] ]]);
+                $this->testDetails->push(['placeholder' => 'XCTO_NOT_CORRECT', 'values' => [  ]]);
             }
         }
     }

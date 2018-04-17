@@ -63,7 +63,7 @@ class ContentTypeRating extends Rating {
 				$detail      = "CT_WRONG_CHARSET";
 			}
 
-			$this->testDetails->push( [ 'placeholder' => $detail, 'values' => [ [ 'HEADER' => $header ] ] ] );
+			$this->testDetails->push( [ 'placeholder' => $detail, 'values' => [  ['HEADER' => $header ]] ] );
 		}
 	}
 
@@ -78,18 +78,18 @@ class ContentTypeRating extends Rating {
 
 			if ( stripos( $finding[0]->charset, 'utf-8' ) !== false ) {
 				$this->score = 60;
-				$detailMeta  = "CT_META_TAG_SET_CORRECTRAW";
+				$detailMeta  = "CT_META_TAG_SET_CORRECT";
 			}
 
 			$this->testDetails->push( [
 				'placeholder' => $detailMeta,
-				'values'      => [ [ 'META' => json_encode( $finding[0]->__toString() ) ] ]
+				'values'      => [ [ 'META' => $finding[0]->__toString() ] ]
 			] );
 		} // case: <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		elseif ( $finding = $dom->find( 'meta[http-equiv=Content-Type]' ) ) {
 			if ( stripos( $finding[0]->content, 'charset=utf-8' ) !== false ) {
 				$this->score = 60;
-				$detailMeta  = "CT_META_TAG_SET_CORRECTRAW";
+				$detailMeta  = "CT_META_TAG_SET_CORRECT";
 			} elseif ( stripos( $finding[0]->content, 'charset=' ) !== false ) {
 				$detailMeta  = "CT_META_TAG_SET";
 				$this->score = 30;
@@ -97,7 +97,7 @@ class ContentTypeRating extends Rating {
 
 			$this->testDetails->push( [
 				'placeholder' => 'CT_META_TAG_SET',
-				'values'      => [ 'META' => $finding[0]->__toString() ]
+				'values'      => [[ 'META' => $finding[0]->__toString() ]]
 			] );
 		}
 	}
