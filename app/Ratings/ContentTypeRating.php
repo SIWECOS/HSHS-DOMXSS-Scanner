@@ -89,7 +89,7 @@ class ContentTypeRating extends Rating {
 		elseif ( $finding = $dom->find( 'meta[http-equiv=Content-Type]' ) ) {
 			if ( stripos( $finding[0]->content, 'charset=utf-8' ) !== false ) {
 				$this->score = 60;
-				$detailMeta  = "CT_META_TAG_SET_CORRECT";
+				$detailMeta  = "CT_META_TAG_SET_CORRECTRAW";
 			} elseif ( stripos( $finding[0]->content, 'charset=' ) !== false ) {
 				$detailMeta  = "CT_META_TAG_SET";
 				$this->score = 30;
