@@ -6,23 +6,18 @@ use voku\helper\HtmlDomParser;
 use GuzzleHttp\Client;
 use App\HTTPResponse;
 
-class ContentTypeRating extends Rating
-{
+class ContentTypeRating extends Rating {
 
-    public function __construct(HTTPResponse $response) {
-        parent::__construct($response);
+	public function __construct( HTTPResponse $response ) {
+		parent::__construct( $response );
 
-        $this->name = "CONTENT_TYPE";
-        $this->scoreType = "warning";
-    }
+		$this->name      = "CONTENT_TYPE";
+		$this->scoreType = "warning";
+	}
 
-    protected function rate()
-    {
-        $header = $this->getHeader('content-type');
+	protected function rate() {
 
-        if ($header === null) {
-            $this->hasError = true;
-            $this->errorMessage = "HEADER_NOT_SET";
+		$header = $this->getHeader( 'content-type' );
 
             $this->checkMetaTag();
         } elseif (count($header) > 1) {
@@ -34,34 +29,33 @@ class ContentTypeRating extends Rating
         } else {
             $detail = "CT_HEADER_WITHOUT_CHARSET";
 
-            $this->checkMetaTag();
+			$this->checkMetaTag();
 
-            $header = $header[0];
+			$header = $header[0];
 
             if (stripos($header, 'charset=') !== false) {
                 $this->score = 50;
                 $detail = "CT_HEADER_WITH_CHARSET";
             }
 
-            if (stripos($header, 'charset=utf-8') !== false) {
-                $this->score = 100;
-                $detail = "CT_CORRECT";
-            }
+			// HASEGAWA
+			// http://openmya.hacker.jp/hasegawa/public/20071107/s6/h6.html?file=datae.txt
+			elseif (
+				( stripos( $header, 'utf8' ) !== false ) ||
+				( stripos( $header, 'Windows-31J' ) !== false ) ||
+				( stripos( $header, 'CP932' ) !== false ) ||
+				( stripos( $header, 'MS932' ) !== false ) ||
+				( stripos( $header, 'MS942C' ) !== false ) ||
+				( stripos( $header, 'sjis' ) !== false ) ||
+				( stripos( $header, 'jis' ) !== false )
+			) {
+				$this->score = 0;
+				$detail      = "CT_WRONG_CHARSET";
+			}
 
-            // HASEGAWA
-            // http://openmya.hacker.jp/hasegawa/public/20071107/s6/h6.html?file=datae.txt
-            elseif (
-                (stripos($header, 'utf8') !== false) ||
-                (stripos($header, 'Windows-31J') !== false) ||
-                (stripos($header, 'CP932') !== false) ||
-                (stripos($header, 'MS932') !== false) ||
-                (stripos($header, 'MS942C') !== false) ||
-                (stripos($header, 'sjis') !== false) ||
-                (stripos($header, 'jis') !== false)
-            ) {
-                $this->score = 0;
-                $detail = "CT_WRONG_CHARSET";
-            }
+			$this->testDetails->push( [ 'placeholder' => $detail, 'values' => [  'HEADER' => $header ] ] );
+		}
+	}
 
             $this->testDetails->push([ 'placeholder' => $detail, 'values' => ['HEADER' => $header] ]);
         }

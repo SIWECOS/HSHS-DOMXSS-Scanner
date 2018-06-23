@@ -23,6 +23,7 @@ class XXSSProtectionRating extends Rating
         if ($header === null) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_NOT_SET";
+            $this->testDetails->push(['placeholder' => 'HEADER_NOT_SET', 'values'=>[]]);
         } elseif (count($header) > 1) {
             $this->hasError = true;
             $this->errorMessage = "HEADER_SET_MULTIPLE_TIMES";
