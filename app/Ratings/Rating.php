@@ -3,7 +3,6 @@
 namespace App\Ratings;
 
 use App\HTTPResponse;
-use GuzzleHttp\Client;
 
 abstract class Rating
 {
@@ -16,7 +15,6 @@ abstract class Rating
     public $scoreType = null;
     public $testDetails = null;
 
-
     /**
      * Rating constructor.
      */
@@ -28,11 +26,10 @@ abstract class Rating
         $this->rate();
     }
 
-
     public function getHeader($header)
     {
         $result = $this->response->header($header);
+
         return json_encode($result) ? $result : 'ERROR';
     }
-
 }
