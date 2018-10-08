@@ -2,14 +2,13 @@
 
 namespace App;
 
-use App\Ratings\CSPRating;
 use App\Ratings\ContentTypeRating;
+use App\Ratings\CSPRating;
 use App\Ratings\HPKPRating;
 use App\Ratings\HSTSRating;
 use App\Ratings\XContentTypeOptionsRating;
 use App\Ratings\XFrameOptionsRating;
 use App\Ratings\XXSSProtectionRating;
-
 
 /**
  * Returns a HeaderReport / Rating for the given URL.
@@ -23,19 +22,18 @@ class HeaderCheck
         $this->response = new HTTPResponse($url);
     }
 
-   
     public function report()
     {
-        if($this->response->hasErrors()){
+        if ($this->response->hasErrors()) {
             return [
-                'name' => 'HEADER',
-                'hasError' => true,
+                'name'         => 'HEADER',
+                'hasError'     => true,
                 'errorMessage' => [
-					'placeholder' => 'NO_HTTP_RESPONSE',
-					'values'      => []
-				],
+                    'placeholder' => 'NO_HTTP_RESPONSE',
+                    'values'      => [],
+                ],
                 'score' => 0,
-                'tests' => []
+                'tests' => [],
             ];
         }
 
@@ -47,23 +45,22 @@ class HeaderCheck
         $xFrameOptionsRating = new XFrameOptionsRating($this->response);
         $xXssProtectionRating = new XXSSProtectionRating($this->response);
 
-
         // Calculating score as an average of the single scores WITHOUT the HPKP scan
         $score = 0;
-        $score+= $cspRating->score;
-        $score+= $contentTypeRating->score;
-        $score+= $hstsRating->score;
-        $score+= $xContenTypeOptionsRating->score;
-        $score+= $xFrameOptionsRating->score;
-        $score+= $xXssProtectionRating->score;
+        $score += $cspRating->score;
+        $score += $contentTypeRating->score;
+        $score += $hstsRating->score;
+        $score += $xContenTypeOptionsRating->score;
+        $score += $xFrameOptionsRating->score;
+        $score += $xXssProtectionRating->score;
         $score = floor($score / 6);
 
         return [
-            'name' => 'HEADER',
-            'hasError' => false,
+            'name'         => 'HEADER',
+            'hasError'     => false,
             'errorMessage' => null,
-            'score' => $score,
-            'tests' => [
+            'score'        => $score,
+            'tests'        => [
                 $cspRating,
                 $contentTypeRating,
                 $hpkpRating,
@@ -71,7 +68,7 @@ class HeaderCheck
                 $xContenTypeOptionsRating,
                 $xFrameOptionsRating,
                 $xXssProtectionRating,
-            ]
+            ],
         ];
     }
 }
