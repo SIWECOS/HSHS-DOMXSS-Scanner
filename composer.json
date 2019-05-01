@@ -20,7 +20,8 @@
         "phpunit/phpunit": "~7.0",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*",
-        "timacdonald/log-fake": "^1.0"
+        "timacdonald/log-fake": "^1.0",
+        "wnx/laravel-stats": "^1.9"
     },
     "autoload": {
         "classmap": [
